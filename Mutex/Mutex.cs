@@ -8,7 +8,8 @@ namespace Mutex
 
         public void Lock()
         {
-            while (Interlocked.CompareExchange(ref _lockCounter, 1, 0) == _lockCounter) Thread.Sleep(10);
+            var sw = new SpinWait();
+            while (Interlocked.CompareExchange(ref _lockCounter, 1, 0) == _lockCounter) sw.SpinOnce();
         }
 
         public void Unlock()
