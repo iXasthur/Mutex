@@ -5,7 +5,11 @@ namespace Mutex
 {
     internal class OSHandle : IDisposable
     {
-        [DllImport("Kernel32.dll", SetLastError = true)]
+        [DllImport("Kernel32.dll",
+            EntryPoint = "CloseHandle",
+            SetLastError = true,
+            CharSet = CharSet.Auto,
+            CallingConvention = CallingConvention.StdCall)]
         private static extern bool CloseHandle(IntPtr handle);
         
         
