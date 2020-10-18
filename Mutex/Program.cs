@@ -6,7 +6,8 @@ namespace Mutex
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Mutex mutex = new Mutex();
+            OSHandle handle = new OSHandle();
         }
     }
 }
