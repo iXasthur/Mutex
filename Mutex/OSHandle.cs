@@ -5,8 +5,9 @@ namespace Mutex
 {
     internal class OSHandle : IDisposable
     {
-        [DllImport("Kernel32.dll")]
+        [DllImport("Kernel32.dll", SetLastError = true)]
         private static extern bool CloseHandle(IntPtr handle);
+        
         
         private readonly Mutex _mutex = new Mutex();
 
