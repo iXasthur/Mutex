@@ -6,8 +6,8 @@ namespace Mutex
     {
         static void Main(string[] args)
         {
-            Mutex mutex = new Mutex();
-            OSHandle handle = new OSHandle();
+            OSHandle handle = new OSHandle(IntPtr.Zero);
+            handle.Dispose();
         }
     }
 }
