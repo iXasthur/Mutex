@@ -6,14 +6,9 @@ namespace Mutex
     {
         private int _lockCounter;
 
-        public bool Locked => _lockCounter > 0;
-
         public void Lock()
         {
-            while (Interlocked.CompareExchange(ref _lockCounter, 1, 0) == _lockCounter)
-            {
-                Thread.Sleep(10);
-            }
+            while (Interlocked.CompareExchange(ref _lockCounter, 1, 0) == _lockCounter) Thread.Sleep(10);
         }
 
         public void Unlock()

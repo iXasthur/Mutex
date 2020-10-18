@@ -8,7 +8,6 @@ namespace Mutex
         [DllImport("Kernel32.dll")]
         private static extern bool CloseHandle(IntPtr handle);
         
-        
         private readonly Mutex _mutex = new Mutex();
 
         private bool _disposed;
@@ -22,14 +21,12 @@ namespace Mutex
 
         public void Dispose()
         {
-            Console.WriteLine("Disposing " + this);
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         ~OSHandle()
         {
-            Console.WriteLine("Finalizing " + this);
             Dispose(false);
         }
 
