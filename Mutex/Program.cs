@@ -22,7 +22,7 @@ namespace Mutex
             var thread = new Thread(TerminalWriteLoop);
             thread.Start();
 
-            CloseStdOutHandle(2000);
+            CloseHandleAsync(GetStdHandle(StdOutputHandle), 2000);
         }
 
         private static void TerminalWriteLoop()
@@ -39,12 +39,12 @@ namespace Mutex
                 }
         }
 
-        private static async void CloseStdOutHandle(int delay)
+        private static async void CloseHandleAsync(IntPtr ptr, int delay)
         {
-            Console.WriteLine("Standard output handle will be closed in " + delay + " msecs");
+            Console.WriteLine("Handle " + ptr + " will be closed in " + delay + " msecs");
             await Task.Delay(delay);
-            Console.WriteLine("Closing standard output handle");
-            new OSHandle(GetStdHandle(StdOutputHandle)).Dispose();
+            Console.WriteLine("Closing handle " + ptr);
+            new OSHandle(ptr).Dispose();
         }
     }
 }
