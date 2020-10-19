@@ -16,13 +16,17 @@ namespace Mutex
         
         
         private const int StdOutputHandle = -11;
+        
+        private static Mutex _mutex = new Mutex();
 
         private static void Main(string[] args)
         {
             var thread = new Thread(TerminalWriteLoop);
             thread.Start();
+            thread = new Thread(TerminalWriteLoop);
+            thread.Start();
 
-            CloseHandleAsync(GetStdHandle(StdOutputHandle), 2000);
+            CloseHandleAsync(GetStdHandle(StdOutputHandle), 800);
         }
 
         private static void TerminalWriteLoop()
@@ -30,11 +34,15 @@ namespace Mutex
             while (true)
                 try
                 {
-                    Console.WriteLine("I'm alive ^_^");
-                    Thread.Sleep(250);
+                    _mutex.Lock();
+                    Console.WriteLine(Thread.CurrentThread.ManagedThreadId + ": I'm alive ^_^");
+                    Console.WriteLine(Thread.CurrentThread.ManagedThreadId + ": I'm alive ^_^");
+                    _mutex.Unlock();
+                    Thread.Sleep(500);
                 }
                 catch
                 {
+                    _mutex.Unlock();
                     break;
                 }
         }
